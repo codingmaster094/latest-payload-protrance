@@ -1,7 +1,6 @@
 import type { Field } from 'payload'
 
 import {
-  EXPERIMENTAL_TableFeature,
   FixedToolbarFeature,
   HeadingFeature,
   InlineToolbarFeature,
@@ -107,22 +106,44 @@ export const hero: Field = {
     {
       name: 'richText',
       type: 'richText',
-      label: {
-        en: 'Rich Text',
-        de: 'Rich Text',
-      },
       editor: lexicalEditor({
-        features: ({ defaultFeatures }) => [
-          ...defaultFeatures,
-          HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
-          FixedToolbarFeature(),
-          InlineToolbarFeature(),
-          EXPERIMENTAL_TableFeature(),
-        ],
+        features: ({ rootFeatures }) => {
+          return [
+            ...rootFeatures,
+            HeadingFeature({ enabledHeadingSizes: ['h1', 'h2', 'h3', 'h4'] }),
+            FixedToolbarFeature(),
+            InlineToolbarFeature(),
+          ]
+        },
       }),
+      label: false,
+    },
+    {
+      name: 'type',
+      type: 'select',
+      defaultValue: 'lowImpact',
+      label: 'Type',
+      options: [
+        {
+          label: 'None',
+          value: 'none',
+        },
+        {
+          label: 'High Impact',
+          value: 'highImpact',
+        },
+        {
+          label: 'Medium Impact',
+          value: 'mediumImpact',
+        },
+        {
+          label: 'Low Impact',
+          value: 'lowImpact',
+        },
+      ],
+      required: true,
     },
     linkGroup({
-      appearances: ['default', 'outline'],
       overrides: {
         maxRows: 2,
       },
